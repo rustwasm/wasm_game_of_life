@@ -24,7 +24,8 @@ for the latest commits on every branch in Travis CI all at once.
 
 Chapter branches/submodules:
 
-* TODO
+* `chapter-zero`: An initial template for this project that contains a Rust and
+  WebAssembly "hello world" ready to go.
 
 ## Sending Pull Requests
 
