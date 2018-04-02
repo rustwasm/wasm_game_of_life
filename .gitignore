@@ -1,4 +1,7 @@
-
 /target
 **/*.rs.bk
 Cargo.lock
+
+# Ignore all the chapter submodules directories, that git doesn't clean up when
+# switching between branches.
+chapter-*
