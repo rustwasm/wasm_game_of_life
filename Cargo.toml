@@ -1,0 +1,6 @@
+[package]
+name = "wasm_game_of_life"
+version = "0.1.0"
+authors = ["Nick Fitzgerald <fitzgen@gmail.com>"]
+
+[dependencies]
