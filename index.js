@@ -42,14 +42,14 @@ const drawGrid = () => {
 
   // Vertical lines.
   for (let i = 0; i <= width; i++) {
-    ctx.moveTo(i * (CELL_SIZE + 1) + .5, 0);
-    ctx.lineTo(i * (CELL_SIZE + 1) + .5, (CELL_SIZE + 1) * height + 1);
+    ctx.moveTo(i * (CELL_SIZE + 1) + 1, 0);
+    ctx.lineTo(i * (CELL_SIZE + 1) + 1, (CELL_SIZE + 1) * height + 1);
   }
 
   // Horizontal lines.
   for (let j = 0; j <= height; j++) {
-    ctx.moveTo(0,                           j * (CELL_SIZE + 1) + .5);
-    ctx.lineTo((CELL_SIZE + 1) * width + 1, j * (CELL_SIZE + 1) + .5);
+    ctx.moveTo(0,                           j * (CELL_SIZE + 1) + 1);
+    ctx.lineTo((CELL_SIZE + 1) * width + 1, j * (CELL_SIZE + 1) + 1);
   }
 
   ctx.stroke();
@@ -75,8 +75,8 @@ const drawCells = () => {
         : ALIVE_COLOR;
 
       ctx.fillRect(
-        col * (CELL_SIZE + 1) + .5,
-        row * (CELL_SIZE + 1) + .5,
+        col * (CELL_SIZE + 1) + 1,
+        row * (CELL_SIZE + 1) + 1,
         CELL_SIZE,
         CELL_SIZE
       );
