@@ -1,4 +1,8 @@
 [submodule "chapter-zero"]
 	path = chapter-zero
-	url = ./
+	url = https://github.com/fitzgen/wasm_game_of_life.git
 	branch = chapter-zero
+[submodule "chapter-one"]
+	path = chapter-one
+	url = https://github.com/fitzgen/wasm_game_of_life.git
+	branch = chapter-one
