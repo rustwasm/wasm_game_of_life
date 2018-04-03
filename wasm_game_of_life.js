@@ -1,72 +1,45 @@
 
             /* tslint:disable */
-            import * as wasm from './wasm_game_of_life_bg'; // imports from wasm file
+            import * as wasm from './wasm_game_of_life_bg';
             
 
-            
-            let cachedDecoder = null;
-            function textDecoder() {
-                if (cachedDecoder)
-                    return cachedDecoder;
-                cachedDecoder = new TextDecoder('utf-8');
-                return cachedDecoder;
-            }
-        
-            let cachedUint8Memory = null;
-            function getUint8Memory() {
-                if (cachedUint8Memory === null ||
-                    cachedUint8Memory.buffer !== wasm.memory.buffer)
-                    cachedUint8Memory = new Uint8Array(wasm.memory.buffer);
-                return cachedUint8Memory;
-            }
-        
-                function getStringFromWasmBrowser(ptr, len) {
-                    const mem = getUint8Memory();
-                    const slice = mem.slice(ptr, ptr + len);
-                    const ret = textDecoder().decode(slice);
-                    return ret;
+            export class Universe {
+                    constructor(ptr) {
+                        this.ptr = ptr;
+                    }
+                
+                free() {
+                    const ptr = this.ptr;
+                    this.ptr = 0;
+                    wasm.__wbg_universe_free(ptr);
                 }
-            const getStringFromWasm = getStringFromWasmBrowser;
-export function __wbg_f_alert(ptr0, len0) {
-
-                        let arg0 = getStringFromWasm(ptr0, len0);
-                    alert(arg0)
+            static new() {
+        const ret = wasm.universe_new();
+                return new Universe(ret);
+                            
+            }
+ width() {
+        const ret = wasm.universe_width(this.ptr);
+                return ret;
+            }
+ height() {
+        const ret = wasm.universe_height(this.ptr);
+                return ret;
+            }
+ cells() {
+        const ret = wasm.universe_cells(this.ptr);
+                return ret;
+            }
+ tick() {
+        const ret = wasm.universe_tick(this.ptr);
+                return ret;
+            }
 }
-
-            let cachedEncoder = null;
-            function textEncoder() {
-                if (cachedEncoder)
-                    return cachedEncoder;
-                cachedEncoder = new TextEncoder('utf-8');
-                return cachedEncoder;
-            }
-        
-                function passStringToWasmBrowser(arg) {
-                    if (typeof(arg) !== 'string')
-                        throw new Error('expected a string argument');
-                    const buf = textEncoder().encode(arg);
-                    const len = buf.length;
-                    const ptr = wasm.__wbindgen_malloc(len);
-                    getUint8Memory().set(buf, ptr);
-                    return [ptr, len];
-                }
-            const passStringToWasm = passStringToWasmBrowser;
-export function greet(arg0) {
-        const [ptr0, len0] = passStringToWasm(arg0);
-                    try {
-                    const ret = wasm.greet(ptr0, len0);
-                    return ret;
-                } finally {
-                    
-wasm.__wbindgen_free(ptr0, len0);
-
-                }
-            }
 let slab = [];
             let slab_next = 0;
         
             function addHeapObject(obj) {
-                if (slab_next == slab.length)
+                if (slab_next === slab.length)
                     slab.push(slab.length + 1);
                 const idx = slab_next;
                 const next = slab[idx];
@@ -116,7 +89,34 @@ let slab = [];
                 slab_next = idx >> 1;
             }
         export function __wbindgen_object_drop_ref (i) { dropRef(i); }
-export function __wbindgen_string_new (p, l) {
+
+                const TextDecoder = typeof window === 'object' && window.TextDecoder
+                    ? window.TextDecoder
+                    : require('util').TextDecoder;
+            
+            let cachedDecoder = null;
+            function textDecoder() {
+                if (cachedDecoder)
+                    return cachedDecoder;
+                cachedDecoder = new TextDecoder('utf-8');
+                return cachedDecoder;
+            }
+        
+            let cachedUint8Memory = null;
+            function getUint8Memory() {
+                if (cachedUint8Memory === null ||
+                    cachedUint8Memory.buffer !== wasm.memory.buffer)
+                    cachedUint8Memory = new Uint8Array(wasm.memory.buffer);
+                return cachedUint8Memory;
+            }
+        
+            function getStringFromWasm(ptr, len) {
+                const mem = getUint8Memory();
+                const slice = mem.slice(ptr, ptr + len);
+                const ret = textDecoder().decode(slice);
+                return ret;
+            }
+        export function __wbindgen_string_new (p, l) {
                     return addHeapObject(getStringFromWasm(p, l));
                 }
 export function __wbindgen_number_new (i) { return addHeapObject(i); }
@@ -138,11 +138,11 @@ export function __wbindgen_is_undefined (idx) {
                     return getObject(idx) === undefined ? 1 : 0;
                 }
 export function __wbindgen_boolean_new (v) {
-                    return addHeapObject(v == 1);
+                    return addHeapObject(v === 1);
                 }
 export function __wbindgen_boolean_get (i) {
                     let v = getObject(i);
-                    if (typeof(v) == 'boolean') {
+                    if (typeof(v) === 'boolean') {
                         return v ? 1 : 0;
                     } else {
                         return 2;
@@ -159,18 +159,53 @@ export function __wbindgen_symbol_new (ptr, len) {
                     return addHeapObject(a);
                 }
 export function __wbindgen_is_symbol (i) {
-                    return typeof(getObject(i)) == 'symbol' ? 1 : 0;
+                    return typeof(getObject(i)) === 'symbol' ? 1 : 0;
                 }
 export function __wbindgen_throw (ptr, len) {
                         throw new Error(getStringFromWasm(ptr, len));
                     }
 
+                if (typeof window === 'undefined')
+                    var TextEncoder = require('util').TextEncoder;
+            
+            let cachedEncoder = null;
+            function textEncoder() {
+                if (cachedEncoder)
+                    return cachedEncoder;
+                cachedEncoder = new TextEncoder('utf-8');
+                return cachedEncoder;
+            }
+        
             let cachedUint32Memory = null;
             function getUint32Memory() {
                 if (cachedUint32Memory === null ||
                     cachedUint32Memory.buffer !== wasm.memory.buffer)
                     cachedUint32Memory = new Uint32Array(wasm.memory.buffer);
                 return cachedUint32Memory;
+            }
+        
+            let cachedGlobalArgumentPtr = null;
+            let GLOBAL_ARGUMENT_CNT = 0;
+            function globalArgumentPtr() {
+                if (cachedGlobalArgumentPtr === null)
+                    cachedGlobalArgumentPtr = wasm.__wbindgen_global_argument_ptr();
+                return cachedGlobalArgumentPtr;
+            }
+        
+            function pushGlobalArgument(arg) {{
+                const idx = globalArgumentPtr() / 4 + GLOBAL_ARGUMENT_CNT;
+                getUint32Memory()[idx] = arg;
+                GLOBAL_ARGUMENT_CNT += 1;
+            }}
+        
+            function passStringToWasm(arg) {
+                if (typeof(arg) !== 'string')
+                    throw new Error('expected a string argument');
+                const buf = textEncoder().encode(arg);
+                const len = buf.length;
+                const ptr = wasm.__wbindgen_malloc(len);
+                getUint8Memory().set(buf, ptr);
+                return [ptr, len];
             }
         export function __wbindgen_string_get (i, len_ptr) {
                     let obj = getObject(i);
@@ -181,4 +216,5 @@ export function __wbindgen_throw (ptr, len) {
                     return ptr;
                 }
 
+            
         
