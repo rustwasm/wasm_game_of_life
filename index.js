@@ -2,7 +2,6 @@ import * as wasm from "./wasm_game_of_life";
 import { memory } from "./wasm_game_of_life_bg";
 
 const CELL_SIZE = 5;
-
 const GRID_COLOR = "#CCCCCC";
 const DEAD_COLOR = "#FFFFFF";
 const ALIVE_COLOR = "#000000";
@@ -32,9 +31,6 @@ const renderLoop = () => {
   requestAnimationFrame(renderLoop);
 };
 
-// ru"ya, hauptstrasse
-
-// TODO: all these `.5`s are totally wrong.
 const drawGrid = () => {
   ctx.beginPath();
   ctx.lineWidth = 1 / window.devicePixelRatio;
@@ -67,7 +63,6 @@ const drawCells = () => {
 
   for (let row = 0; row < height; row++) {
     for (let col = 0; col < width; col++) {
-
       const idx = getIndex(row, col);
 
       ctx.fillStyle = cells[idx] === DEAD
