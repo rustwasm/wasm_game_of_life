@@ -1,8 +1,12 @@
 
             /* tslint:disable */
-            import * as wasm from './wasm_game_of_life_bg'; // imports from wasm file
+            import * as wasm from './wasm_game_of_life_bg';
             
 
+            
+                const TextDecoder = typeof window === 'object' && window.TextDecoder
+                    ? window.TextDecoder
+                    : require('util').TextDecoder;
             
             let cachedDecoder = null;
             function textDecoder() {
@@ -20,19 +24,45 @@
                 return cachedUint8Memory;
             }
         
-                function getStringFromWasmBrowser(ptr, len) {
-                    const mem = getUint8Memory();
-                    const slice = mem.slice(ptr, ptr + len);
-                    const ret = textDecoder().decode(slice);
-                    return ret;
-                }
-            const getStringFromWasm = getStringFromWasmBrowser;
-export function __wbg_f_alert(ptr0, len0) {
+            function getStringFromWasm(ptr, len) {
+                const mem = getUint8Memory();
+                const slice = mem.slice(ptr, ptr + len);
+                const ret = textDecoder().decode(slice);
+                return ret;
+            }
+        
+            let cachedUint32Memory = null;
+            function getUint32Memory() {
+                if (cachedUint32Memory === null ||
+                    cachedUint32Memory.buffer !== wasm.memory.buffer)
+                    cachedUint32Memory = new Uint32Array(wasm.memory.buffer);
+                return cachedUint32Memory;
+            }
+        
+            let cachedGlobalArgumentPtr = null;
+            let GLOBAL_ARGUMENT_CNT = 0;
+            function globalArgumentPtr() {
+                if (cachedGlobalArgumentPtr === null)
+                    cachedGlobalArgumentPtr = wasm.__wbindgen_global_argument_ptr();
+                return cachedGlobalArgumentPtr;
+            }
+        
+            function getGlobalArgument(arg) {{
+                const idx = globalArgumentPtr() / 4 + arg;
+                return getUint32Memory()[idx];
+            }}
+        export function __wbg_f_alert_alert_n(arg0) {
+let next_global = 0;
 
-                        let arg0 = getStringFromWasm(ptr0, len0);
-                    alert(arg0)
+                                let len0 = getGlobalArgument(next_global++);
+                                let v0 = getStringFromWasm(arg0, len0);
+                            alert(v0)
 }
 
+                const TextEncoder = typeof window === 'object' && window.TextEncoder
+                    ? window.TextEncoder
+                    : require('util').TextEncoder;
+            
             let cachedEncoder = null;
             function textEncoder() {
                 if (cachedEncoder)
@@ -41,24 +71,31 @@ export function __wbg_f_alert(ptr0, len0) {
                 return cachedEncoder;
             }
         
-                function passStringToWasmBrowser(arg) {
-                    if (typeof(arg) !== 'string')
-                        throw new Error('expected a string argument');
-                    const buf = textEncoder().encode(arg);
-                    const len = buf.length;
-                    const ptr = wasm.__wbindgen_malloc(len);
-                    getUint8Memory().set(buf, ptr);
-                    return [ptr, len];
-                }
-            const passStringToWasm = passStringToWasmBrowser;
-export function greet(arg0) {
-        const [ptr0, len0] = passStringToWasm(arg0);
-                    try {
-                    const ret = wasm.greet(ptr0, len0);
+            function pushGlobalArgument(arg) {{
+                const idx = globalArgumentPtr() / 4 + GLOBAL_ARGUMENT_CNT;
+                getUint32Memory()[idx] = arg;
+                GLOBAL_ARGUMENT_CNT += 1;
+            }}
+        
+            function passStringToWasm(arg) {
+                if (typeof(arg) !== 'string')
+                    throw new Error('expected a string argument');
+                const buf = textEncoder().encode(arg);
+                const len = buf.length;
+                const ptr = wasm.__wbindgen_malloc(len);
+                getUint8Memory().set(buf, ptr);
+                return [ptr, len];
+            }
+        export function greet(arg0) {
+        GLOBAL_ARGUMENT_CNT = 0;
+const [ptr0, len0] = passStringToWasm(arg0);
+                                pushGlobalArgument(len0);
+                            try {
+                    const ret = wasm.greet(ptr0);
                     return ret;
                 } finally {
                     
-wasm.__wbindgen_free(ptr0, len0);
+wasm.__wbindgen_free(ptr0, len0 * 1);
 
                 }
             }
@@ -66,7 +103,7 @@ let slab = [];
             let slab_next = 0;
         
             function addHeapObject(obj) {
-                if (slab_next == slab.length)
+                if (slab_next === slab.length)
                     slab.push(slab.length + 1);
                 const idx = slab_next;
                 const next = slab[idx];
@@ -138,11 +175,11 @@ export function __wbindgen_is_undefined (idx) {
                     return getObject(idx) === undefined ? 1 : 0;
                 }
 export function __wbindgen_boolean_new (v) {
-                    return addHeapObject(v == 1);
+                    return addHeapObject(v === 1);
                 }
 export function __wbindgen_boolean_get (i) {
                     let v = getObject(i);
-                    if (typeof(v) == 'boolean') {
+                    if (typeof(v) === 'boolean') {
                         return v ? 1 : 0;
                     } else {
                         return 2;
@@ -159,20 +196,12 @@ export function __wbindgen_symbol_new (ptr, len) {
                     return addHeapObject(a);
                 }
 export function __wbindgen_is_symbol (i) {
-                    return typeof(getObject(i)) == 'symbol' ? 1 : 0;
+                    return typeof(getObject(i)) === 'symbol' ? 1 : 0;
                 }
 export function __wbindgen_throw (ptr, len) {
                         throw new Error(getStringFromWasm(ptr, len));
                     }
-
-            let cachedUint32Memory = null;
-            function getUint32Memory() {
-                if (cachedUint32Memory === null ||
-                    cachedUint32Memory.buffer !== wasm.memory.buffer)
-                    cachedUint32Memory = new Uint32Array(wasm.memory.buffer);
-                return cachedUint32Memory;
-            }
-        export function __wbindgen_string_get (i, len_ptr) {
+export function __wbindgen_string_get (i, len_ptr) {
                     let obj = getObject(i);
                     if (typeof(obj) !== 'string')
                         return 0;
@@ -181,4 +210,5 @@ export function __wbindgen_throw (ptr, len) {
                     return ptr;
                 }
 
+            
         
