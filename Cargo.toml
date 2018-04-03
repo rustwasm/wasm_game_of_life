@@ -7,7 +7,6 @@ authors = ["Nick Fitzgerald <fitzgen@gmail.com>"]
 crate-type = ["cdylib"]
 
 [dependencies]
-# wasm-bindgen = { git = "https://github.com/alexcrichton/wasm-bindgen.git" }
 wasm-bindgen = { path = "../wasm-bindgen" }
 
 [profile.release]

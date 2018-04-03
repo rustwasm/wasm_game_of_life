@@ -165,8 +165,9 @@ export function __wbindgen_throw (ptr, len) {
                         throw new Error(getStringFromWasm(ptr, len));
                     }
 
-                if (typeof window === 'undefined')
-                    var TextEncoder = require('util').TextEncoder;
+                const TextEncoder = typeof window === 'object' && window.TextEncoder
+                    ? window.TextEncoder
+                    : require('util').TextEncoder;
             
             let cachedEncoder = null;
             function textEncoder() {
