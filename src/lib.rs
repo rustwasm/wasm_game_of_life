@@ -7,8 +7,8 @@ use wasm_bindgen::prelude::*;
 #[repr(u8)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Cell {
-    Dead = 0,
-    Alive = 1,
+    Dead = 1,
+    Alive = 0,
 }
 
 #[wasm_bindgen]
