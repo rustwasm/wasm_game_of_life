@@ -52,7 +52,7 @@ const drawGrid = () => {
 };
 
 const getIndex = (row, column) => {
-  return row * height + column;
+  return row * width + column;
 };
 
 const drawCells = () => {
