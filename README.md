@@ -29,6 +29,9 @@ Chapter branches/submodules:
 
 * `chapter-one`: A working, if minimal, implementation of Conway's Game of Life.
 
+  * `chapter-one-with-bug`: The same as `chapter-one`, but with a Real World bug I
+    wrote. Debugging this is intended as an exercise for readers.
+
 ## Sending Pull Requests
 
 1. Checkout the branch for the first chapter that needs to be updated. Apply
