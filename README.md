@@ -27,6 +27,8 @@ Chapter branches/submodules:
 * `chapter-zero`: An initial template for this project that contains a Rust and
   WebAssembly "hello world" ready to go.
 
+* `chapter-one`: A working, if minimal, implementation of Conway's Game of Life.
+
 ## Sending Pull Requests
 
 1. Checkout the branch for the first chapter that needs to be updated. Apply
