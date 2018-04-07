@@ -32,6 +32,9 @@ Chapter branches/submodules:
   * `chapter-one-with-bug`: The same as `chapter-one`, but with a Real World bug I
     wrote. Debugging this is intended as an exercise for readers.
 
+* `chapter-two`: Added ability to pause and resume the game, as well as toggle
+  individual cells by clicking on them.
+
 ## Sending Pull Requests
 
 1. Checkout the branch for the first chapter that needs to be updated. Apply
