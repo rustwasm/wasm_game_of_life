@@ -34,6 +34,10 @@
         const ret = wasm.universe_tick(this.ptr);
                 return ret;
             }
+ toggle_cell(arg0, arg1) {
+        const ret = wasm.universe_toggle_cell(this.ptr, arg0, arg1);
+                return ret;
+            }
 }
 let slab = [];
             let slab_next = 0;

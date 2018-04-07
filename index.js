@@ -108,4 +108,17 @@ playPauseButton.addEventListener("click", event => {
   }
 });
 
+canvas.addEventListener("click", event => {
+  const relativeLeft = event.pageX - event.target.offsetLeft;
+  const relativeTop = event.pageY - event.target.offsetTop;
+
+  const row = Math.min(Math.floor(relativeTop / (CELL_SIZE + 1)), height - 1);
+  const col = Math.min(Math.floor(relativeLeft / (CELL_SIZE + 1)), width - 1);
+
+  universe.toggle_cell(row, col);
+
+  drawCells();
+  drawGrid();
+});
+
 play();
