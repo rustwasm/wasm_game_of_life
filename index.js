@@ -1,4 +1,4 @@
-import * as wasm from "./wasm_game_of_life";
+import { Universe } from "./wasm_game_of_life";
 import { memory } from "./wasm_game_of_life_bg";
 
 const CELL_SIZE = 5;
@@ -10,7 +10,7 @@ const ALIVE_COLOR = "#000000";
 const DEAD = 0;
 const ALIVE = 1;
 
-const universe = wasm.Universe.new();
+const universe = Universe.new();
 const width = universe.width();
 const height = universe.height();
 
