@@ -52,15 +52,6 @@
                 return getUint32Memory()[idx];
             }}
         
-                        const __wbg_f_log_log_n_target = console.log;
-                    export function __wbg_f_log_log_n(arg0) {
-let next_global = 0;
-
-                                let len0 = getGlobalArgument(next_global++);
-                                let v0 = getStringFromWasm(arg0, len0);
-                            __wbg_f_log_log_n_target(v0)
-}
-
                         const __wbg_f_time_time_n_target = console.time;
                     export function __wbg_f_time_time_n(arg0) {
 let next_global = 0;
