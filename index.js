@@ -25,10 +25,10 @@ const ctx = canvas.getContext('2d');
 let animationId = null;
 
 const renderLoop = () => {
+  universe.tick();
+
   drawCells();
   drawGrid();
-
-  universe.tick();
 
   animationId = requestAnimationFrame(renderLoop);
 };
