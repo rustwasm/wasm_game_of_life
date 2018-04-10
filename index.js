@@ -24,18 +24,59 @@ const ctx = canvas.getContext('2d');
 
 let animationId = null;
 
+const fps = new class {
+  constructor() {
+    this.fps = document.getElementById("fps");
+    this.frames = [];
+    this.lastFrameTimeStamp = performance.now();
+  }
+
+  render() {
+    const now = performance.now();
+    const delta = now - this.lastFrameTimeStamp;
+    this.lastFrameTimeStamp = now;
+    const fps = 1 / delta * 1000;
+
+    this.frames.push(fps);
+    if (this.frames.length > 100) {
+      this.frames.shift();
+    }
+
+    let min = Infinity;
+    let max = -Infinity;
+    let sum = 0;
+    for (let i = 0; i < this.frames.length; i++) {
+      sum += this.frames[i];
+      min = Math.min(this.frames[i], min);
+      max = Math.max(this.frames[i], max);
+    }
+    let mean = sum / this.frames.length;
+
+    this.fps.textContent = `
+Frames per Second:
+         latest = ${Math.round(fps)}
+avg of last 100 = ${Math.round(mean)}
+min of last 100 = ${Math.round(min)}
+max of last 100 = ${Math.round(max)}
+`.trim();
+  }
+};
+
 const renderLoop = () => {
+  fps.render();
+
   drawCells();
   drawGrid();
 
-  universe.tick();
+  for (let i = 0; i < 9; i++) {
+    universe.tick();
+  }
 
   animationId = requestAnimationFrame(renderLoop);
 };
 
 const drawGrid = () => {
   ctx.beginPath();
-  ctx.lineWidth = 1 / window.devicePixelRatio;
   ctx.strokeStyle = GRID_COLOR;
 
   // Vertical lines.
@@ -63,13 +104,36 @@ const drawCells = () => {
 
   ctx.beginPath();
 
+  // Because changing the `fillStyle` is an expensive operation, we want to
+  // avoid doing it for every cell. Instead, we do two passes: one for live
+  // cells, and one for dead cells.
+
+  // Live cells.
+  ctx.fillStyle = ALIVE_COLOR;
   for (let row = 0; row < height; row++) {
     for (let col = 0; col < width; col++) {
       const idx = getIndex(row, col);
+      if (cells[idx] !== ALIVE) {
+        continue;
+      }
 
-      ctx.fillStyle = cells[idx] === DEAD
-        ? DEAD_COLOR
-        : ALIVE_COLOR;
+      ctx.fillRect(
+        col * (CELL_SIZE + 1) + 1,
+        row * (CELL_SIZE + 1) + 1,
+        CELL_SIZE,
+        CELL_SIZE
+      );
+    }
+  }
+
+  // Dead cells.
+  ctx.fillStyle = DEAD_COLOR;
+  for (let row = 0; row < height; row++) {
+    for (let col = 0; col < width; col++) {
+      const idx = getIndex(row, col);
+      if (cells[idx] !== DEAD) {
+        continue;
+      }
 
       ctx.fillRect(
         col * (CELL_SIZE + 1) + 1,
