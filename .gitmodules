@@ -14,3 +14,7 @@
 	path = chapter-two
 	url = https://github.com/fitzgen/wasm_game_of_life.git
 	branch = chapter-two
+[submodule "chapter-three"]
+	path = chapter-three
+	url = https://github.com/fitzgen/wasm_game_of_life.git
+	branch = chapter-three

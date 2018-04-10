@@ -35,6 +35,9 @@ Chapter branches/submodules:
 * `chapter-two`: Added ability to pause and resume the game, as well as toggle
   individual cells by clicking on them.
 
+* `chapter-three`: Speed ups to rendering and computing the next generation of
+  cells.
+
 ## Sending Pull Requests
 
 1. Checkout the branch for the first chapter that needs to be updated. Apply
