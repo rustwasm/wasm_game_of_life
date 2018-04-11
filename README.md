@@ -47,8 +47,14 @@ Chapter branches/submodules:
 
 3. Repeat step 2 until there is no next chapter.
 
-4. Checkout the `master` branch. Run `git submodule foreach git pull --ff` to
-   point the submodules to the latest commit on each branch. Commit this update.
+4. Checkout the `master` branch. Run
+
+   ```
+   ./update-submodules.sh
+   ```
+
+   to point the submodules to the latest commit on each branch. Commit this
+   update.
 
 5. Send a pull request for each chapter branch that was modified, and for
    `master`.
