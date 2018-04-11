@@ -7,7 +7,7 @@ authors = ["Nick Fitzgerald <fitzgen@gmail.com>"]
 crate-type = ["cdylib"]
 
 [dependencies]
-wasm-bindgen = { path = "../wasm-bindgen" }
+wasm-bindgen = "0.2.1"
 
 [profile.release]
 # Include function names in the `.wasm` for better debugging and
