@@ -65,12 +65,12 @@ max of last 100 = ${Math.round(max)}
 const renderLoop = () => {
   fps.render();
 
-  drawCells();
-  drawGrid();
-
   for (let i = 0; i < 9; i++) {
     universe.tick();
   }
+
+  drawCells();
+  drawGrid();
 
   animationId = requestAnimationFrame(renderLoop);
 };
