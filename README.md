@@ -38,6 +38,27 @@ Chapter branches/submodules:
 * `chapter-three`: Speed ups to rendering and computing the next generation of
   cells.
 
+## Cloning the Repository
+
+In order to clone this repository and view the code for each chapter, you will
+need to initialize and update the submodules. This can be done using the
+following commands:
+
+```
+# Clone the wasm_game_of_life repository.
+git clone git@github.com:rustwasm/wasm_game_of_life.git
+
+# Initialize and fetch the submodules.
+git submodule update --init
+```
+
+This can also be performed with a single command using the
+`--recurse-submodules` option.
+
+```
+git clone --recurse-submodules git@github.com:rustwasm/wasm_game_of_life.git
+```
+
 ## Sending Pull Requests
 
 1. Checkout the branch for the first chapter that needs to be updated. Apply
