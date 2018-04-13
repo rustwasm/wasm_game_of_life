@@ -48,11 +48,8 @@ following commands:
 # Clone the wasm_game_of_life repository.
 git clone git@github.com:rustwasm/wasm_game_of_life.git
 
-# Initialize the local submodule configuration file.
-git submodule init
-
-# Fetch the appropriate submodule commit.
-git submodule update
+# Initialize and fetch the submodules.
+git submodule update --init
 ```
 
 This can also be performed with a single command using the
