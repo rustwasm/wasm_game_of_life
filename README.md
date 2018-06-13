@@ -7,7 +7,7 @@ tutorial. The tutorial builds increasingly featureful implementations of
 **[Read the tutorial here.][tutorial]**
 
 [game-of-life]: https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
-[tutorial]: https://rust-lang-nursery.github.io/rust-wasm/game-of-life/introduction.html
+[tutorial]: https://rustwasm.github.io/book/game-of-life/introduction.html
 
 ## Repository Structure
 
