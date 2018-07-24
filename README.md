@@ -29,8 +29,8 @@ Chapter branches/submodules:
 
 * `chapter-one`: A working, if minimal, implementation of Conway's Game of Life.
 
-  * `chapter-one-with-bug`: The same as `chapter-one`, but with a Real World bug I
-    wrote. Debugging this is intended as an exercise for readers.
+  * `chapter-one-with-bug`: The same as `chapter-one`, but with a Real World(tm)
+    bug I wrote. Debugging this is intended as an exercise for readers.
 
 * `chapter-two`: Added ability to pause and resume the game, as well as toggle
   individual cells by clicking on them.
@@ -52,13 +52,6 @@ git clone git@github.com:rustwasm/wasm_game_of_life.git
 git submodule update --init
 ```
 
-This can also be performed with a single command using the
-`--recurse-submodules` option.
-
-```
-git clone --recurse-submodules git@github.com:rustwasm/wasm_game_of_life.git
-```
-
 ## Sending Pull Requests
 
 1. Checkout the branch for the first chapter that needs to be updated. Apply
@@ -71,11 +64,11 @@ git clone --recurse-submodules git@github.com:rustwasm/wasm_game_of_life.git
 4. Checkout the `master` branch. Run
 
    ```
-   ./update-submodules.sh
+   ./update-submodules-to-local-branches.sh
    ```
 
-   to point the submodules to the latest commit on each branch. Commit this
-   update.
+   to point the submodules to the latest local commit on each branch. Commit
+   this update.
 
 5. Send a pull request for each chapter branch that was modified, and for
    `master`.
