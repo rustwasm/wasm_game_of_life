@@ -15,7 +15,7 @@ install:
   - *INSTALL_NODE_VIA_NVM
   - (test -x $HOME/.cargo/bin/cargo-install-update || cargo install cargo-update)
   - (test -x $HOME/.cargo/bin/wasm-pack || cargo install --vers "^0.4" wasm-pack)
-  - (test -x $HOME/.cargo/bin/wasm-bindgen || cargo install --vers "^0.2" wasm-bindgen)
+  - (test -x $HOME/.cargo/bin/wasm-bindgen || cargo install --vers "^0.2" wasm-bindgen-cli)
   - cargo install-update -a
 
 script:
