@@ -1,28 +1,23 @@
-import { Universe } from "./wasm_game_of_life";
-import { memory } from "./wasm_game_of_life_bg";
+import { Universe, Cell } from "wasm-game-of-life";
+import { memory } from "wasm-game-of-life/wasm_game_of_life_bg";
 
-const CELL_SIZE = 5;
+const CELL_SIZE = 5; // px
 const GRID_COLOR = "#CCCCCC";
 const DEAD_COLOR = "#FFFFFF";
 const ALIVE_COLOR = "#000000";
 
-// These must match `Cell::Alive` and `Cell::Dead` in `src/lib.rs`.
-const DEAD = 0;
-const ALIVE = 1;
-
+// Construct the universe, and get its width and height.
 const universe = Universe.new();
 const width = universe.width();
 const height = universe.height();
 
-// Initialize the canvas with room for all of our cells and a 1px border
+// Give the canvas room for all of our cells and a 1px border
 // around each of them.
 const canvas = document.getElementById("game-of-life-canvas");
 canvas.height = (CELL_SIZE + 1) * height + 1;
 canvas.width = (CELL_SIZE + 1) * width + 1;
 
 const ctx = canvas.getContext('2d');
-
-let animationId = null;
 
 const fps = new class {
   constructor() {
@@ -32,16 +27,20 @@ const fps = new class {
   }
 
   render() {
+    // Convert the delta time since the last frame render into a measure
+    // of frames per second.
     const now = performance.now();
     const delta = now - this.lastFrameTimeStamp;
     this.lastFrameTimeStamp = now;
     const fps = 1 / delta * 1000;
 
+    // Save only the latest 100 timings.
     this.frames.push(fps);
     if (this.frames.length > 100) {
       this.frames.shift();
     }
 
+    // Find the max, min, and mean of our 100 latest timings.
     let min = Infinity;
     let max = -Infinity;
     let sum = 0;
@@ -52,6 +51,7 @@ const fps = new class {
     }
     let mean = sum / this.frames.length;
 
+    // Render the statistics.
     this.fps.textContent = `
 Frames per Second:
          latest = ${Math.round(fps)}
@@ -62,6 +62,8 @@ max of last 100 = ${Math.round(max)}
   }
 };
 
+let animationId = null;
+
 const renderLoop = () => {
   fps.render();
 
@@ -69,11 +71,36 @@ const renderLoop = () => {
     universe.tick();
   }
 
-  drawCells();
   drawGrid();
+  drawCells();
 
   animationId = requestAnimationFrame(renderLoop);
 };
+
+const isPaused = () => {
+  return animationId === null;
+};
+
+const playPauseButton = document.getElementById("play-pause");
+
+const play = () => {
+  playPauseButton.textContent = "⏸";
+  renderLoop();
+};
+
+const pause = () => {
+  playPauseButton.textContent = "▶";
+  cancelAnimationFrame(animationId);
+  animationId = null;
+};
+
+playPauseButton.addEventListener("click", event => {
+  if (isPaused()) {
+    play();
+  } else {
+    pause();
+  }
+});
 
 const drawGrid = () => {
   ctx.beginPath();
@@ -104,16 +131,12 @@ const drawCells = () => {
 
   ctx.beginPath();
 
-  // Because changing the `fillStyle` is an expensive operation, we want to
-  // avoid doing it for every cell. Instead, we do two passes: one for live
-  // cells, and one for dead cells.
-
-  // Live cells.
+  // Alive cells.
   ctx.fillStyle = ALIVE_COLOR;
   for (let row = 0; row < height; row++) {
     for (let col = 0; col < width; col++) {
       const idx = getIndex(row, col);
-      if (cells[idx] !== ALIVE) {
+      if (cells[idx] !== Cell.Alive) {
         continue;
       }
 
@@ -131,7 +154,7 @@ const drawCells = () => {
   for (let row = 0; row < height; row++) {
     for (let col = 0; col < width; col++) {
       const idx = getIndex(row, col);
-      if (cells[idx] !== DEAD) {
+      if (cells[idx] !== Cell.Dead) {
         continue;
       }
 
@@ -146,31 +169,6 @@ const drawCells = () => {
 
   ctx.stroke();
 };
-
-const playPauseButton = document.getElementById("play-pause");
-
-const isPaused = () => {
-  return animationId === null;
-};
-
-const play = () => {
-  playPauseButton.textContent = "⏸";
-  renderLoop();
-};
-
-const pause = () => {
-  playPauseButton.textContent = "▶";
-  cancelAnimationFrame(animationId);
-  animationId = null;
-};
-
-playPauseButton.addEventListener("click", event => {
-  if (isPaused()) {
-    play();
-  } else {
-    pause();
-  }
-});
 
 canvas.addEventListener("click", event => {
   const boundingRect = canvas.getBoundingClientRect();

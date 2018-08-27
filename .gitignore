@@ -1,5 +1,6 @@
-/target/
-/node_modules/
-wasm_game_of_life.d.ts
-wasm_game_of_life.js
-wasm_game_of_life_bg.wasm
+pkg/
+target/
+wasm-pack.log
+Cargo.lock
+www/dist/
+www/package-lock.json

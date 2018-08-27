@@ -1,23 +1,29 @@
 [package]
-name = "wasm_game_of_life"
+name = "wasm-game-of-life"
 version = "0.1.0"
 authors = ["Nick Fitzgerald <fitzgen@gmail.com>"]
 
 [lib]
 crate-type = ["cdylib"]
 
+[features]
+default-features = ["console_error_panic_hook", "wee_alloc"]
+
 [dependencies]
-wasm-bindgen = "0.2.13"
+cfg-if = "0.1.2"
+wasm-bindgen = "0.2"
 
-[profile.release]
-# Include function names in the `.wasm` for better debugging and
-# profiling. Comment this out if you're trying to create the smallest `.wasm`
-# binaries you can.
-debug = true
+# The `console_error_panic_hook` crate provides better debugging of panics by
+# logging them with `console.error`. This is great for development, but requires
+# all the `std::fmt` and `std::panicking` infrastructure, so isn't great for
+# code size when deploying.
+console_error_panic_hook = { version = "0.1.1", optional = true }
 
-# # Uncomment these lines to create smaller `.wasm` binaries, at the cost of
-# # longer compile times.
-# codegen-units = 1
-# incremental = false
+# `wee_alloc` is a tiny allocator for wasm that is only ~1K in code size
+# compared to the default allocator's ~10K. It is slower than the default
+# allocator, however.
+wee_alloc = { version = "0.4.1", optional = true }
+
+# [profile.release]
+# opt-level = 'z'
 # lto = true
-# opt-level = "z"
