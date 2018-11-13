@@ -1,19 +1,12 @@
 extern crate cfg_if;
 extern crate wasm_bindgen;
+extern crate web_sys;
 
 mod utils;
 
 use std::fmt;
 use wasm_bindgen::prelude::*;
-
-#[wasm_bindgen]
-extern {
-    #[wasm_bindgen(js_namespace = console)]
-    fn time(name: &str);
-
-    #[wasm_bindgen(js_namespace = console)]
-    fn timeEnd(name: &str);
-}
+use web_sys::console;
 
 pub struct Timer<'a> {
     name: &'a str,
@@ -21,14 +14,14 @@ pub struct Timer<'a> {
 
 impl<'a> Timer<'a> {
     pub fn new(name: &'a str) -> Timer<'a> {
-        time(name);
+        console::time_with_label(name);
         Timer { name }
     }
 }
 
 impl<'a> Drop for Timer<'a> {
     fn drop(&mut self) {
-        timeEnd(self.name);
+        console::time_end_with_label(self.name);
     }
 }
 
