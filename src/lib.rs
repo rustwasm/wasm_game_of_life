@@ -183,7 +183,7 @@ impl Universe {
     }
 
     pub fn toggle_cell(&mut self, row: u32, column: u32) {
-        let idx = self.get_index(row, column);
+        let idx = self.get_index(row % self.height, column % self.width);
         self.cells[idx].toggle();
     }
 }
