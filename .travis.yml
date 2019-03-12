@@ -18,5 +18,4 @@ install:
 
 script:
   - wasm-pack build
-  - cd ./pkg && npm link && cd -
-  - cd ./www && npm install && npm link wasm-game-of-life && ./node_modules/.bin/webpack
+  - cd ./www && npm install && ./node_modules/.bin/webpack
