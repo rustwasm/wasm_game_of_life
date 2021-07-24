@@ -130,32 +130,14 @@ const drawCells = () => {
   const cells = new Uint8Array(memory.buffer, cellsPtr, width * height);
 
   ctx.beginPath();
-
-  // Alive cells.
-  ctx.fillStyle = ALIVE_COLOR;
+  
   for (let row = 0; row < height; row++) {
     for (let col = 0; col < width; col++) {
       const idx = getIndex(row, col);
-      if (cells[idx] !== Cell.Alive) {
-        continue;
-      }
-
-      ctx.fillRect(
-        col * (CELL_SIZE + 1) + 1,
-        row * (CELL_SIZE + 1) + 1,
-        CELL_SIZE,
-        CELL_SIZE
-      );
-    }
-  }
-
-  // Dead cells.
-  ctx.fillStyle = DEAD_COLOR;
-  for (let row = 0; row < height; row++) {
-    for (let col = 0; col < width; col++) {
-      const idx = getIndex(row, col);
-      if (cells[idx] !== Cell.Dead) {
-        continue;
+      if (cells[idx] === Cell.Alive) {
+        ctx.fillStyle = ALIVE_COLOR;
+      } else if(cells[idx] === Cell.Dead) {
+        ctx.fillStyle = DEAD_COLOR;
       }
 
       ctx.fillRect(
@@ -183,9 +165,9 @@ canvas.addEventListener("click", event => {
   const col = Math.min(Math.floor(canvasLeft / (CELL_SIZE + 1)), width - 1);
 
   universe.toggle_cell(row, col);
-
-  drawCells();
+  
   drawGrid();
+  drawCells();
 });
 
 play();
