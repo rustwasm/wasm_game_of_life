@@ -25,12 +25,12 @@
     <button id="play-pause"></button>
     <div id="fps"></div>
     <canvas id="game-of-life-canvas"></canvas>
-    <!-- <script type="module"> -->
-    <!--   import init from './wasm_game_of_life.js'; -->
-    <!--   window.addEventListener('load', async () => { -->
-    <!-- 	  await init('./wasm_game_of_life_bg.wasm'); -->
-    <!--   }); -->
-    <!-- </script> -->
-    <script type="module" src="./index.js"></script>
+    <script type="module">
+      import init from './wasm_game_of_life.js';
+      window.addEventListener('load', async () => {
+	  await init('./wasm_game_of_life_bg.wasm');
+      });
+    </script>
+    <!-- <script type="module" src="./index.js"></script> -->
   </body>
 </html>
