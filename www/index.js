@@ -1,4 +1,3 @@
-
 import init, { Universe, Cell } from "./wasm_game_of_life.js";
 var memory = (await init("./wasm_game_of_life_bg.wasm")).memory;
 
