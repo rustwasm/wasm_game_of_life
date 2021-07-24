@@ -27,3 +27,10 @@ tutorial. The tutorial builds increasingly featureful implementations of
 
 [game-of-life]: https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
 [tutorial]: https://rustwasm.github.io/book/game-of-life/introduction.html
+
+### Documenting "Without Bundler"
+
+```
+cargo build --target wasm32-unknown-unknown
+wasm-bindgen --out-dir www --target web --reference-types --no-typescript --omit-default-module-path target/wasm32-unknown-unknown/debug/wasm_game_of_life.wasm
+```
