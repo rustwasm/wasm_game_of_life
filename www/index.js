@@ -121,10 +121,6 @@ const drawGrid = () => {
   ctx.stroke();
 };
 
-const getIndex = (row, column) => {
-  return row * width + column;
-};
-
 const drawCells = () => {
   const cellsPtr = universe.cells();
   const cells = new Uint8Array(memory.buffer, cellsPtr, width * height);
@@ -135,7 +131,7 @@ const drawCells = () => {
   ctx.fillStyle = ALIVE_COLOR;
   for (let row = 0; row < height; row++) {
     for (let col = 0; col < width; col++) {
-      const idx = getIndex(row, col);
+      const idx = universe.get_index(row, col);
       if (cells[idx] !== Cell.Alive) {
         continue;
       }
@@ -153,7 +149,7 @@ const drawCells = () => {
   ctx.fillStyle = DEAD_COLOR;
   for (let row = 0; row < height; row++) {
     for (let col = 0; col < width; col++) {
-      const idx = getIndex(row, col);
+      const idx = universe.get_index(row, col);
       if (cells[idx] !== Cell.Dead) {
         continue;
       }
