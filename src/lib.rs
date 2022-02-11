@@ -50,10 +50,6 @@ pub struct Universe {
 }
 
 impl Universe {
-    fn get_index(&self, row: u32, column: u32) -> usize {
-        (row * self.width + column) as usize
-    }
-
     /// Get the dead and alive values of the entire universe.
     pub fn get_cells(&self) -> &[Cell] {
         &self.cells
@@ -126,6 +122,10 @@ impl Universe {
 /// Public methods, exported to JavaScript.
 #[wasm_bindgen]
 impl Universe {
+    pub fn get_index(&self, row: u32, column: u32) -> usize {
+        (row * self.width + column) as usize
+    }
+
     pub fn tick(&mut self) {
         // let _timer = Timer::new("Universe::tick");
 
